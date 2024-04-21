@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # Pojet C
-=======
-# Projet en C
->>>>>>> 9e2995b5bcb7ef1039953a49beeaa825f956f629
 
 ---
 
