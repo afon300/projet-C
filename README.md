@@ -1,4 +1,4 @@
-# Pojet en C
+# Projet en C
 
 ---
 
