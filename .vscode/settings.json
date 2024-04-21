@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "cdataframe.h": "c",
+        "column.h": "c"
+    }
+}
