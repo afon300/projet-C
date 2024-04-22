@@ -14,7 +14,7 @@ Le programme du projet s'exécute dans le 'prog.exe'
 
 
 > [!WARNING]
-> Le projet est toujours en cours de dévellopement
+> Le projet est toujours en cours de développement
 
 ## Autres Informations
 
