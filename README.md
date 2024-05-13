@@ -29,6 +29,6 @@ Le programme du projet s'exécute dans le 'prog.exe'
 
 
 
-###### (il est trop bow mon readme car moi je l'aime bi1)
+###### (il est pas trop bow mon readme, car moi je l'aime bi1)
 
 # Merci beaucoup d'avoir lu jusqu'au bout ce README.
