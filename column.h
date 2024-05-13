@@ -1,21 +1,3 @@
-#ifndef COLUMN_H
-#define COLUMN_H
-
-typedef struct {
-    char *title;
-    int *data;
-    int physical_size;
-    int logical_size;
-} Column;
-
-typedef struct {
-    Column *columns;
-    int num_columns;
-} CDataframe;
-
-void free_column(Column *col);
-void init_cdataframe(CDataframe *df, int num_columns);
-void free_cdataframe(CDataframe *df);
-void init_column(Column *col, const char *title);
-
-#endif
+/* il y a r car il y avais des bug mais ça vas être régler via un patch 
+et il est 5h32 quand j'écrit ce texte et je suis un peu fatigué 
+donc je vais laisser mon collègue gérer la sicion des fonctions */

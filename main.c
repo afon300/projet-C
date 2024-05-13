@@ -1,38 +1,45 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "cdataframe.h"
 #include "column.h"
 
+void print_int(void* value) {
+    printf("%d\n", *(int*)value);
+}
+
+int compare_int(void* a, void* b) {
+    return *(int*)a - *(int*)b;
+}
+
+void print_string(void* value) {
+    printf("%s\n", (char*)value);
+}
+
+int compare_string(void* a, void* b) {
+    return strcmp((char*)a, (char*)b);
+}
+
+
+/*mtn il vas falloir rendre ce bout un peut plus esthétique mais ce seras pour plus tard car là il est un peu tard*/
 int main() {
     int stop;
     CDataframe df;
     int num_columns = 3;
     init_cdataframe(&df, num_columns);
 
-/********* Se sont des exemples avec l'age le numéro étudiant et les notes *********/
+    init_column(&df.columns[0], "Date de", print_int, compare_int);
+    init_column(&df.columns[1], "Number", print_int, compare_int);
+    init_column(&df.columns[2], "Name", print_string, compare_string);
 
-    init_column(&df.columns[0], "Age");
-    init_column(&df.columns[1], "Number");
-    init_column(&df.columns[2], "Notes");
-
-    insert_value(&df.columns[0], 18);
-    insert_value(&df.columns[1], 2023646);
-    insert_value(&df.columns[2], 16);
-
-/*    for (int i = 0; i < num_columns; ++i) {
-        printf("%s: ", df.columns[i].title);
-        for (int j = 0; j < df.columns[i].logical_size; ++j) {
-            printf("%d ", df.columns[i].data[j]);
-        }
-        printf("\n");
-    }
-
-    int val = 5;
-    if (insert_value(&df.columns[0], val))
-        printf("Valeu added successfully to Age column\n");
-    else
-        printf("Fatal Error");
-
-*/
+    int* age = malloc(sizeof(int));
+    *age = 23;
+    insert_value(&df.columns[0], age);
+    int* number = malloc(sizeof(int));
+    *number = 2023646;
+    insert_value(&df.columns[1], number);
+    char* note = strdup("Foufoune");
+    insert_value(&df.columns[2], note);
 
     print_col(&df.columns[0]); // |
     print_col(&df.columns[1]); // |--> affichage des colones 0, 1 et 2
@@ -41,14 +48,5 @@ int main() {
     free_cdataframe(&df);
     scanf("%d", &stop); // pour le prog.exe
 
-
-
     return 0;
 }
-
-/*** pour compiler sur visual studio code ***/
-/* commandes :
-    - gcc -o prog *.c
-    - ./prog
-*/
-
