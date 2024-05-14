@@ -28,7 +28,7 @@ int main() {
     int num_columns = 3;
     init_cdataframe(&df, num_columns);
 
-    init_column(&df.columns[0], "Date de", print_int, compare_int);
+    init_column(&df.columns[0], "Age", print_int, compare_int);
     init_column(&df.columns[1], "Number", print_int, compare_int);
     init_column(&df.columns[2], "Name", print_string, compare_string);
 
