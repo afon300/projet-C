@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define INIT_SIZE 255
+#define REALLOC_SIZE 255
+
 void init_column(Column *col, const char *title, void (*print_func)(void*), int (*compare_func)(void*, void*)) { //pour créer une colone
     col->title = strdup(title);
     col->data = malloc(INIT_SIZE * sizeof(void*));
