@@ -1,25 +1,10 @@
-#include "cdataframe.h"
-#include "column.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void print_int(void* value) {
-    printf("%d\n", *(int*)value);
-}
-
-int compare_int(void* a, void* b) {
-    return *(int*)a - *(int*)b;
-}
-
-void print_string(void* value) {
-    printf("%s\n", (char*)value);
-}
-
-int compare_string(void* a, void* b) {
-    return strcmp((char*)a, (char*)b);
-}
-
+#include "cdataframe.h"
+#include "column.h"
+#include "fonctions.h"
 
 /*mtn il vas falloir rendre ce bout un peut plus esthétique mais ce seras pour plus tard car là il est un peu tard*/
 int main() {
@@ -45,6 +30,10 @@ int main() {
     print_col(&df.columns[1]); // |--> affichage des colones 0, 1 et 2
     print_col(&df.columns[2]); // |
 
+    delete_column(&df.columns[0]);
+    delete_column(&df.columns[1]);
+    delete_column(&df.columns[2]);
+    
     free_cdataframe(&df);
     scanf("%d", &stop); // pour le prog.exe
 

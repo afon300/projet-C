@@ -14,6 +14,6 @@ void init_column(Column *col, const char *title, void (*print_func)(void*), int 
 int insert_value(Column *col, void* value);
 
 void print_col(Column* col);
-void free_column(Column *col);
+void delete_column(Column *col);
 
 #endif

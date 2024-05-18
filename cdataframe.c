@@ -12,11 +12,12 @@ void init_cdataframe(CDataframe *df, int num_columns) {//initialiser le cdatafra
     df->num_columns = num_columns;
 }
 
-void free_cdataframe(CDataframe *df) { //libérer le dataframe
+void free_cdataframe(CDataframe *df) {
     for (int i = 0; i < df->num_columns; ++i) {
-        free_column(&df->columns[i]);
+        delete_column(&df->columns[i]);
     }
     free(df->columns);
+    df->columns = NULL; // Mettre à NULL pour éviter les accès futurs invalides
 }
 
 /************************** Fonctions de la 1.5 **************************/

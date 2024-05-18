@@ -37,19 +37,25 @@ int insert_value(Column *col, void* value) { //pour insérer des vals
     return 1;
 }
 
-void print_col(Column* col) { //pour afficher une colone
-    if (col == NULL || ((void**)col->data) == NULL) {
-        printf("Column is empty\n");
+void print_col(Column* col) {
+    if (col == NULL || col->data == NULL) {
+        printf("NULL\n");
         return;
     }
 
     printf("Column \"%s\" content:\n", col->title);
     for (int i = 0; i < col->logical_size; ++i) {
-        col->print_func(((void**)col->data)[i]);
+        if (col->data == NULL) {
+            printf("NULL\n");
+        } else {
+            col->print_func(((char**)col->data)[i]);
+        }
     }
 }
 
-void free_column(Column *col) { //libérer une colone
-    free(col->title);
-    free(col->data);
+void delete_column(Column *col) {
+    free((col)->title);
+    free((col)->data);
+    free(col);
+    col = NULL;
 }
