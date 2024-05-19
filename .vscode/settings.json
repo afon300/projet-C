@@ -2,6 +2,7 @@
     "files.associations": {
         "stdlib.h": "c",
         "cdataframe.h": "c",
-        "column.h": "c"
+        "column.h": "c",
+        "string.h": "c"
     }
 }

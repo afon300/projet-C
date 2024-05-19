@@ -7,35 +7,91 @@
 #include "fonctions.h"
 
 /*mtn il vas falloir rendre ce bout un peut plus esthétique mais ce seras pour plus tard car là il est un peu tard*/
+
 int main() {
-    int stop;
-    CDataframe df;
-    int num_columns = 3;
-    init_cdataframe(&df, num_columns);
+    //Exp d'ut avec des entiers
+    printf("Exemple d'utilisation avec des entiers:\n");
+    Column *mycol = create_column(INT, "colone de sortie d'entiers");
 
-    init_column(&df.columns[0], "Age", print_int, compare_int);
-    init_column(&df.columns[1], "Number", print_int, compare_int);
-    init_column(&df.columns[2], "Name", print_string, compare_string);
+    int Autriche = 30;       //|
+    int Bulgarie = 72;       //|
+    int Chine = 2;           //|
+    int Djibouti = 174;      //|
+    int Egypte = 35;         //|
+    int France = 7;          //|
+    int Grece = 52;          //|
+    int Hongrie = 56;        //|------> Classement par La Banque mondiale
+    int Inde = 5;            //|
+    int Japon = 4;           //|
+    int Kazakhstan = 55;     //|
+    int Laos = 120;          //|
+    int Madagascar = 133;    //|
+    int Norvege = 29;        //|
+    int Oman = 69;           //|
 
-    int* age = malloc(sizeof(int));
-    *age = 23;
-    insert_value(&df.columns[0], age);
-    int* number = malloc(sizeof(int));
-    *number = 2023646;
-    insert_value(&df.columns[1], number);
-    char* note = strdup("Foufoune");
-    insert_value(&df.columns[2], note);
+    insert_value(mycol, &Autriche);
+    insert_value(mycol, &Bulgarie);
+    insert_value(mycol, &Chine);
+    insert_value(mycol, &Djibouti);
+    insert_value(mycol, &Egypte);
+    insert_value(mycol, &France);
+    insert_value(mycol, &Grece);
+    insert_value(mycol, &Hongrie);
+    insert_value(mycol, &Inde);
+    insert_value(mycol, &Japon);
+    insert_value(mycol, &Kazakhstan);
+    insert_value(mycol, &Laos);
+    insert_value(mycol, &Madagascar);
+    insert_value(mycol, &Norvege);
+    insert_value(mycol, &Oman);
 
-    print_col(&df.columns[0]); // |
-    print_col(&df.columns[1]); // |--> affichage des colones 0, 1 et 2
-    print_col(&df.columns[2]); // |
+    print_col(mycol);
+    sort(mycol, ASC);
+    print_col_par_ordre(mycol);
 
-    delete_column(&df.columns[0]);
-    delete_column(&df.columns[1]);
-    delete_column(&df.columns[2]);
+    // Libérer la mémoire car sinon ça fais bcp là non ?
+    delete_column(mycol);
+
+    /* en théorie ça marche mais il reste un petit bug je réglerais ça tout à l'heure car il est un peu tard
+    Column *decimal_col = create_column(FLOAT, "Decimal column");
+    float x = 1.13;
+    insert_value(decimal_col, &x);
+    printf("Contenu de la colonne avant le tri :\n");
+    print_col(decimal_col);
+    sort(decimal_col, ASC);
+    printf("Contenu de la colonne après le tri :\n");
+    print_col(decimal_col);
+    delete_column(decimal_col);  
+    */
+
+
+    // Exp d'util avec des chaînes de caractères ou cch pour les intimes ^^
+    printf("\nExemple d'utilisation avec des chaînes de caractères:\n");
+    mycol = create_column(STRING, "String column");
+    insert_value(mycol, "Vienne");
+    insert_value(mycol, "Sofia");   
+    insert_value(mycol, "Pekin");    
+    insert_value(mycol, "Djibouti");   
+    insert_value(mycol, "Le Caire");
+    insert_value(mycol, "Paris");
+    insert_value(mycol, "Athenes");
+    insert_value(mycol, "Budapest");
+    insert_value(mycol, "New Delhi");
+    insert_value(mycol, "Tokyo"); 
+    insert_value(mycol, "Noursoultan");  
+    insert_value(mycol, "Vientiane");
+    insert_value(mycol, "Antananarivo");
+    insert_value(mycol, "Oslo");
+    insert_value(mycol, "Mascate");
     
-    free_cdataframe(&df);
-    scanf("%d", &stop); // pour le prog.exe
+    printf("Column content before sorting : \n");
+    print_col(mycol);
+    sort(mycol, ASC);
+    printf("Column content after sorting : \n");
+    print_col_par_ordre(mycol);
+
+    // Libérer la mémoire pcq j'ai que 64MB de ram est c'est pas assez
+    delete_column(mycol);
 
     return 0;
 }

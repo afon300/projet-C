@@ -7,7 +7,7 @@
 #define INIT_SIZE 256
 #define REALLOC_SIZE 256
 
-void init_cdataframe(CDataframe *df, int num_columns) {//initialiser le cdataframe à partir d'une colone
+void init_cdataframe(CDataframe *df, int num_columns) {
     df->columns = malloc(num_columns * sizeof(Column));
     df->num_columns = num_columns;
 }
@@ -17,12 +17,42 @@ void free_cdataframe(CDataframe *df) {
         delete_column(&df->columns[i]);
     }
     free(df->columns);
-    df->columns = NULL; // Mettre à NULL pour éviter les accès futurs invalides
+    df->columns = NULL;
+    df->num_columns = 0;
 }
 
-/************************** Fonctions de la 1.5 **************************/
+void add_column(CDataframe *df, Column new_col) {
+    df->columns = realloc(df->columns, (df->num_columns + 1) * sizeof(Column));
+    df->columns[df->num_columns] = new_col;
+    df->num_columns++;
+}
 
-int count_occurrences(Column* col, void* value) {//nb occurence
+void remove_column(CDataframe *df, int col_index) {
+    if (col_index < 0 || col_index >= df->num_columns) return;
+
+    delete_column(&df->columns[col_index]);
+
+    for (int i = col_index; i < df->num_columns - 1; ++i) {
+        df->columns[i] = df->columns[i + 1];
+    }
+    df->columns = realloc(df->columns, (df->num_columns - 1) * sizeof(Column));
+    df->num_columns--;
+}
+
+void rename_column(CDataframe *df, int col_index, const char* new_name) {
+    if (col_index < 0 || col_index >= df->num_columns) return;
+
+    free(df->columns[col_index].title);
+    df->columns[col_index].title = strdup(new_name);
+}
+
+void print_dataframe(CDataframe *df) {
+    for (int i = 0; i < df->num_columns; ++i) {
+        print_col(&df->columns[i]);
+    }
+}
+
+int count_occurrences(Column* col, void* value) {
     int count = 0;
     for (int i = 0; i < col->logical_size; ++i) {
         if (col->compare_func(((void**)col->data)[i], value) == 0) {
@@ -32,14 +62,14 @@ int count_occurrences(Column* col, void* value) {//nb occurence
     return count;
 }
 
-void* find_value(Column* col, int position) {//trouver une valeur dans une colone
+void* find_value(Column* col, int position) {
     if (position < 0 || position >= col->logical_size) {
         return NULL;
     }
     return ((void**)col->data)[position];
 }
 
-int count_greater_than(Column* col, void* value) { //plus grand que
+int count_greater_than(Column* col, void* value) {
     int count = 0;
     for (int i = 0; i < col->logical_size; ++i) {
         if (col->compare_func(((void**)col->data)[i], value) > 0) {
@@ -49,7 +79,7 @@ int count_greater_than(Column* col, void* value) { //plus grand que
     return count;
 }
 
-int count_less_than(Column* col, void* value) { //plus petit que
+int count_less_than(Column* col, void* value) {
     int count = 0;
     for (int i = 0; i < col->logical_size; ++i) {
         if (col->compare_func(((void**)col->data)[i], value) < 0) {
@@ -59,7 +89,7 @@ int count_less_than(Column* col, void* value) { //plus petit que
     return count;
 }
 
-int count_equal_to(Column* col, void* value) { //égale à
+int count_equal_to(Column* col, void* value) {
     int count = 0;
     for (int i = 0; i < col->logical_size; ++i) {
         if (col->compare_func(((void**)col->data)[i], value) == 0) {

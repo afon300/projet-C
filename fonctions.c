@@ -1,9 +1,18 @@
-#ifndef FONCTIONS_H
-#define FONCTIONS_H
+#include <stdio.h>
+#include <string.h>
 
-void print_int(void* value);
-int compare_int(void* a, void* b);
-void print_string(void* value);
-int compare_string(void* a, void* b);
+void print_int(void* value) {
+    printf("%d\n", *(int*)value);
+}
 
-#endif
+void print_string(void* value) {
+    printf("%s\n", (char*)value);
+}
+
+int compare_int(void* a, void* b) {
+    return *(int*)a - *(int*)b;
+}
+
+int compare_string(void* a, void* b) {
+    return strcmp((char*)a, (char*)b);
+}
