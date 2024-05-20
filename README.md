@@ -8,9 +8,9 @@
 Librairies utilisés :
 * `stdio.h` qui une librairie par défault
 * `stdlib.h` pour la gestion de mémoire notamment
-* `string.h` pour les chaines de caractères
+* `string.h` pour la gestion de chaines de caractères
 
-Le programme du projet s'exécute dans le 'prog.exe'
+Le programme du projet s'exécute dans le 'prog.exe' ou directement dans le 'main.c'
 
 
 > [!WARNING]
@@ -24,11 +24,14 @@ Le programme du projet s'exécute dans le 'prog.exe'
 
 ## Composition
 
-* Le programme est composé de quatres fichiers accessibles depuis les **dossiers**
-* Les fichiers sont le **main.c**, le **cdataframe.c**, le **cdataframe.h** et le fichier **colum.h**
+### Le programme est composé de quatres fichiers accessibles depuis les **dossiers** voici les différents fichiers
 
-
-
-###### (il est pas trop bow mon readme, car moi je l'aime bi1)
+* **cdataframe.h** 
+* **cdataframe.c**
+* **fonctions.h**
+* **fonctions.c**
+* **column.h**
+* **column.c**
+* **main.c**
 
 # Merci beaucoup d'avoir lu jusqu'au bout ce README.
