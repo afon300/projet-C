@@ -53,8 +53,9 @@ int main() {
     sort(int_col, ASC);
     printf("Column content after sorting : \n");
     print_col_par_ordre(int_col);
-
+    
     delete_column(int_col); // Libérer la mémoire pcq j'ai que 64MB de ram est c'est pas assez
+
 
 /********* Exp d'util avec des chaînes de caractères ou STRING pour en anglais ^^ *********/
 
@@ -80,6 +81,8 @@ int main() {
     print_col(str_col);
     sort(str_col, ASC);
     print_col_par_ordre(str_col);
+
+    save_into_csv(str_col, "output.csv");
 
     delete_column(str_col); // Libérer la mémoire car sinon ça fais bcp là non ?
 
@@ -112,7 +115,6 @@ int main() {
     print_col(char_col);
     sort(char_col, ASC);
     delete_column(char_col);  
-
 
     //scanf("%d", &stop); // pour le prog.exe
     return 0;

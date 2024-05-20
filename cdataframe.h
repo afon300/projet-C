@@ -6,6 +6,9 @@
 typedef struct {
     Column *columns;
     int num_columns;
+    int rows;
+    int cols;
+    double **data;
 } CDataframe;
 
 void init_cdataframe(CDataframe *df, int num_columns);
