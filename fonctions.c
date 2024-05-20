@@ -61,9 +61,14 @@ void save_into_csv(Column *col, char *file_name) {
         printf("Erreur lors de l'ouverture du fichier.\n");
         return;
     }
-    for (int i = 0; i < col->logical_size; i++) {
-        fprintf(file, "%lf", ((double*)col->data)[i]);
-        fprintf(file, "\n");
+
+    if (col->type == STRING) {
+        for (int i = 0; i < col->logical_size; i++) {
+            fprintf(file, "%s\n", ((char**)col->data)[i]);
+        }
+    } else {
+        printf("Erreur : type de colonne non pris en charge.\n");
     }
+    
     fclose(file);
 }
