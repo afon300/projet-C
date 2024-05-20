@@ -1,9 +1,9 @@
-#include "column.h"
-#include "fonctions.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "column.h"
+#include "fonctions.h"
 
 #define INIT_SIZE 255
 #define REALLOC_SIZE 255
