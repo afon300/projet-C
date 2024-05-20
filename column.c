@@ -8,35 +8,55 @@
 #define INIT_SIZE 255
 #define REALLOC_SIZE 255
 
-Column* create_column(DataType type, const char *title) { //permet de créer une colonne
+Column* create_column(DataType type, const char *title) {
     Column *col = malloc(sizeof(Column));
     col->title = strdup(title);
     col->data = malloc(INIT_SIZE * sizeof(void*));
     col->type = type;
     col->physical_size = INIT_SIZE;
     col->logical_size = 0;
-    col->index = 0;
+    col->index = NO_INDEX;
 
     switch (type) {
         case INT:
             col->print_func = print_int;
             col->compare_func = compare_int;
             break;
+        case CHAR:
+            col->print_func = print_char;
+            col->compare_func = compare_char;
+            break;
+        case FLOAT:
+            col->print_func = print_float;
+            col->compare_func = compare_float;
+            break;
+        case DOUBLE:
+            col->print_func = print_double;
+            col->compare_func = compare_double;
+            break;
         case STRING:
             col->print_func = print_string;
             col->compare_func = compare_string;
             break;
+        case STRUCTURE:
+            // Définissez ici la fonction d'impression et de comparaison pour les structures
+            break;
+        case UNIT:
+        default:
+            // Gérez les cas UNIT et tout autre cas non spécifié ici
+            break;
     }
-    
     return col;
 }
 
-void sort(Column* col, int sort_dir) { //permet de choisir de trier sa colonne avec quicksort ou partition 
+void sort(Column* col, int sort_dir) {
     if (col == NULL || col->data == NULL) return;
     
-    if (col->index == 0) {
+    if (col->index == NULL) {
         quicksort(col, 0, col->logical_size - 1, sort_dir);
-    } else if (col->index == -1) {
+    } else if (*(col->index) == QUICKSORT_INDEX) { // Déférencement de l'index avant la comparaison
+        quicksort(col, 0, col->logical_size - 1, sort_dir);
+    } else if (*(col->index) == INSERTION_SORT_INDEX) { // Déférencement de l'index avant la comparaison
         insertion_sort(col, sort_dir);
     }
 }
@@ -145,7 +165,7 @@ void delete_column(Column *col) { //permet de supprimer une colonne
     free(col);
 }
 
-int check_index(Column *col) {
+int check_index(Column *col) { // vérifie l'existence de l'index d'une colonne et renvoie -1 si la colonne est nulle, 0 si l'index est inexistant, et 1 si l'index existe.
     if (col == NULL) {
         return -1;
     }
@@ -154,15 +174,10 @@ int check_index(Column *col) {
         return 0;
     }
     
-    if (col->index) {
-        return 1;
-    }
-    
-    return -1;
+    return 1;
 }
 
-
-void erase_index(Column *col) {
+void erase_index(Column *col) { // désalloue la mémoire occupée par l'index d'une colonne si celui-ci existe
     if (col == NULL) {
         return;
     }
@@ -171,7 +186,33 @@ void erase_index(Column *col) {
         free(col->index);
         col->index = NULL;
     }
-    
-    col->index = 0;
 }
 
+int search_value_in_column(Column *col, void *val) { // recherche une valeur donnée dans une colonne.
+    if (col == NULL || val == NULL || col->data == NULL) {
+        return 0;
+    }
+
+
+    if (!col->index) {
+        return -1;
+    }
+
+    int low = 0;
+    int high = col->logical_size - 1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        int cmp = col->compare_func(((void**)col->data)[mid], val);
+
+        if (cmp == 0) {
+            return 1;
+        } else if (cmp < 0) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    return 0;
+}
