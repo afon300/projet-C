@@ -47,10 +47,6 @@ int compare_string(void* a, void* b) {
     return strcmp((char*)a, (char*)b);
 }
 
-
-
-/************************ RIP il est 23h51 il y a plus le time mais je pense tu marche (pas sûr)*******************/
-
 void save_into_csv(Column *col, char *file_name) {
     if (col == NULL || file_name == NULL) {
         printf("Erreur : données ou nom de fichier manquant.\n");
