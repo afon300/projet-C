@@ -13,7 +13,7 @@ void init_cdataframe(CDataframe *df, int num_columns) { // permet d'initialiser 
     df->num_columns = num_columns;
 }
 
-void free_cdataframe(CDataframe *df) {
+void free_cdataframe(CDataframe *df) { //permet de libérer la dataframe
     for (int i = 0; i < df->num_columns; ++i) {
         delete_column(&df->columns[i]);
     }
@@ -22,7 +22,7 @@ void free_cdataframe(CDataframe *df) {
     df->num_columns = 0;
 }
 
-void add_column(CDataframe *df, Column new_col) { //permet 
+void add_column(CDataframe *df, Column new_col) { //permet d'ajouter des colonnes
     df->columns = realloc(df->columns, (df->num_columns + 1) * sizeof(Column));
     df->columns[df->num_columns] = new_col;
     df->num_columns++;
@@ -53,7 +53,7 @@ void print_dataframe(CDataframe *df) { //permet d'imprimer une dataframe
     }
 }
 
-int count_occurrences(Column* col, void* value) {
+int count_occurrences(Column* col, void* value) { //permet de compter combien de valeur sont égale à la valeur donner 
     int count = 0;
     for (int i = 0; i < col->logical_size; ++i) {
         if (col->compare_func(((void**)col->data)[i], value) == 0) {
@@ -70,7 +70,7 @@ void* find_value(Column* col, int position) { // permet de trouver une valeur
     return ((void**)col->data)[position];
 }
 
-int count_greater_than(Column* col, void* value) {
+int count_greater_than(Column* col, void* value) { //permet de compter combien de valeur sont supérieur à la valeur donner
     int count = 0;
     for (int i = 0; i < col->logical_size; ++i) {
         if (col->compare_func(((void**)col->data)[i], value) > 0) {
@@ -80,7 +80,7 @@ int count_greater_than(Column* col, void* value) {
     return count;
 }
 
-int count_less_than(Column* col, void* value) {
+int count_less_than(Column* col, void* value) { //permet de compter combien de valeur sont inférieur à la valeur donné
     int count = 0;
     for (int i = 0; i < col->logical_size; ++i) {
         if (col->compare_func(((void**)col->data)[i], value) < 0) {
@@ -90,7 +90,7 @@ int count_less_than(Column* col, void* value) {
     return count;
 }
 
-int count_equal_to(Column* col, void* value) {
+int count_equal_to(Column* col, void* value) { //permet de compter combien de valeur sont égale à la valeur donner
     int count = 0;
     for (int i = 0; i < col->logical_size; ++i) {
         if (col->compare_func(((void**)col->data)[i], value) == 0) {
