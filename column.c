@@ -31,7 +31,7 @@ Column* create_column(DataType type, const char *title) { //permet de créer une
     return col;
 }
 
-void sort(Column* col, int sort_dir) {
+void sort(Column* col, int sort_dir) { //permet de choisir de trier sa colonne avec quicksort ou partition 
     if (col == NULL || col->data == NULL) return;
     
     if (col->valid_index == 0) {
@@ -41,7 +41,7 @@ void sort(Column* col, int sort_dir) {
     }
 }
 
-void quicksort(Column* col, int left, int right, int sort_dir) {
+void quicksort(Column* col, int left, int right, int sort_dir) { // fonction se servant de partition pour trié rapidement une colonne de la dataframe
     if (left < right) {
         int pi = partition(col, left, right, sort_dir);
         quicksort(col, left, pi - 1, sort_dir);
@@ -49,7 +49,7 @@ void quicksort(Column* col, int left, int right, int sort_dir) {
     }
 }
 
-int partition(Column* col, int left, int right, int sort_dir) {
+int partition(Column* col, int left, int right, int sort_dir) { //fonction qui sert dans quicksort
     void* pivot = ((void**)col->data)[right];
     int i = left - 1;
     for (int j = left; j < right; j++) {
@@ -67,7 +67,7 @@ int partition(Column* col, int left, int right, int sort_dir) {
     return i + 1;
 }
 
-void insertion_sort(Column* col, int sort_dir) {
+void insertion_sort(Column* col, int sort_dir) { //trie une colonne dans l'ordre croissant ou decroissant
     for (int i = 1; i < col->logical_size; i++) {
         void* key = ((void**)col->data)[i];
         int j = i - 1;
