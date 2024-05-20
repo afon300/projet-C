@@ -20,7 +20,7 @@ typedef struct {
     DataType type;
     int physical_size;
     int logical_size;
-    int valid_index;
+    int index;
     void (*print_func)(void*);
     int (*compare_func)(void*, void*);
 } Column;
