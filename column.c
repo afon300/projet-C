@@ -8,7 +8,7 @@
 #define INIT_SIZE 255
 #define REALLOC_SIZE 255
 
-Column* create_column(DataType type, const char *title) {
+Column* create_column(DataType type, const char *title) { //permet de créer une colonne
     Column *col = malloc(sizeof(Column));
     col->title = strdup(title);
     col->data = malloc(INIT_SIZE * sizeof(void*));
@@ -83,7 +83,7 @@ void insertion_sort(Column* col, int sort_dir) {
     }
 }
 
-void print_col_par_ordre(Column* col) {
+void print_col_par_ordre(Column* col) { //imprime une colonne
     if (col == NULL || col->data == NULL) {
         printf("NULL\n");
         return;
@@ -96,7 +96,7 @@ void print_col_par_ordre(Column* col) {
     }
 }
 
-void init_column(Column *col, const char *title, void (*print_func)(void*), int (*compare_func)(void*, void*)) {
+void init_column(Column *col, const char *title, void (*print_func)(void*), int (*compare_func)(void*, void*)) { //créer une colonne
     col->title = strdup(title);
     col->data = malloc(INIT_SIZE * sizeof(void*));
     col->physical_size = INIT_SIZE;
@@ -106,7 +106,7 @@ void init_column(Column *col, const char *title, void (*print_func)(void*), int 
     col->compare_func = compare_func;
 }
 
-int insert_value(Column *col, void* value) {
+int insert_value(Column *col, void* value) { //permet d'insérer une valeur dans la colonne
     if (col == NULL || col->data == NULL) {
         return 0;
     }
@@ -127,7 +127,7 @@ int insert_value(Column *col, void* value) {
     return 1;
 }
 
-void print_col(Column* col) {
+void print_col(Column* col) { //permet d'afficher une colonne
     if (col == NULL || col->data == NULL) {
         printf("NULL\n");
         return;
@@ -139,7 +139,7 @@ void print_col(Column* col) {
     }
 }
 
-void delete_column(Column *col) {
+void delete_column(Column *col) { //permet de supprimer une colonne
     free(col->title);
     free(col->data);
     free(col);

@@ -8,7 +8,7 @@
 #define INIT_SIZE 256
 #define REALLOC_SIZE 256
 
-void init_cdataframe(CDataframe *df, int num_columns) {
+void init_cdataframe(CDataframe *df, int num_columns) { // permet d'initialiser une dataframe
     df->columns = malloc(num_columns * sizeof(Column));
     df->num_columns = num_columns;
 }
@@ -22,13 +22,13 @@ void free_cdataframe(CDataframe *df) {
     df->num_columns = 0;
 }
 
-void add_column(CDataframe *df, Column new_col) {
+void add_column(CDataframe *df, Column new_col) { //permet 
     df->columns = realloc(df->columns, (df->num_columns + 1) * sizeof(Column));
     df->columns[df->num_columns] = new_col;
     df->num_columns++;
 }
 
-void remove_column(CDataframe *df, int col_index) {
+void remove_column(CDataframe *df, int col_index) { //supprime une colonne de la dataframe
     if (col_index < 0 || col_index >= df->num_columns) return;
 
     delete_column(&df->columns[col_index]);
@@ -40,14 +40,14 @@ void remove_column(CDataframe *df, int col_index) {
     df->num_columns--;
 }
 
-void rename_column(CDataframe *df, int col_index, const char* new_name) {
+void rename_column(CDataframe *df, int col_index, const char* new_name) {// permet de renommer une colonne
     if (col_index < 0 || col_index >= df->num_columns) return;
 
     free(df->columns[col_index].title);
     df->columns[col_index].title = strdup(new_name);
 }
 
-void print_dataframe(CDataframe *df) {
+void print_dataframe(CDataframe *df) { //permet d'imprimer une dataframe
     for (int i = 0; i < df->num_columns; ++i) {
         print_col(&df->columns[i]);
     }
@@ -63,7 +63,7 @@ int count_occurrences(Column* col, void* value) {
     return count;
 }
 
-void* find_value(Column* col, int position) {
+void* find_value(Column* col, int position) { // permet de trouver une valeur 
     if (position < 0 || position >= col->logical_size) {
         return NULL;
     }
