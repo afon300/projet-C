@@ -5,9 +5,13 @@
 #define DESC 1
 
 typedef enum {
+    UNIT,
     INT,
+    CHAR,
     FLOAT,
-    STRING
+    DOUBLE,
+    STRING,
+    STRUCTURE
 } DataType;
 
 typedef struct {

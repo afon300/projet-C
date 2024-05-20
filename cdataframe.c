@@ -52,7 +52,10 @@ void print_dataframe(CDataframe *df) { //permet d'imprimer une dataframe
         print_col(&df->columns[i]);
     }
 }
-//Partie 5.1.6
+
+/************************************************** PARTIE 5.1.6 **************************************************/
+
+
 int count_occurrences(Column* col, void* value) { //permet de compter combien de valeur sont égale à la valeur donner 
     int count = 0;
     for (int i = 0; i < col->logical_size; ++i) {
