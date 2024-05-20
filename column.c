@@ -15,7 +15,7 @@ Column* create_column(DataType type, const char *title) { //permet de créer une
     col->type = type;
     col->physical_size = INIT_SIZE;
     col->logical_size = 0;
-    col->valid_index = 0;
+    col->index = 0;
 
     switch (type) {
         case INT:
@@ -34,9 +34,9 @@ Column* create_column(DataType type, const char *title) { //permet de créer une
 void sort(Column* col, int sort_dir) { //permet de choisir de trier sa colonne avec quicksort ou partition 
     if (col == NULL || col->data == NULL) return;
     
-    if (col->valid_index == 0) {
+    if (col->index == 0) {
         quicksort(col, 0, col->logical_size - 1, sort_dir);
-    } else if (col->valid_index == -1) {
+    } else if (col->index == -1) {
         insertion_sort(col, sort_dir);
     }
 }
@@ -101,7 +101,7 @@ void init_column(Column *col, const char *title, void (*print_func)(void*), int 
     col->data = malloc(INIT_SIZE * sizeof(void*));
     col->physical_size = INIT_SIZE;
     col->logical_size = 0;
-    col->valid_index = 0;
+    col->index = 0;
     col->print_func = print_func;
     col->compare_func = compare_func;
 }
@@ -144,3 +144,34 @@ void delete_column(Column *col) { //permet de supprimer une colonne
     free(col->data);
     free(col);
 }
+
+int check_index(Column *col) {
+    if (col == NULL) {
+        return -1;
+    }
+    
+    if (col->index == NULL) {
+        return 0;
+    }
+    
+    if (col->index) {
+        return 1;
+    }
+    
+    return -1;
+}
+
+
+void erase_index(Column *col) {
+    if (col == NULL) {
+        return;
+    }
+    
+    if (col->index != NULL) {
+        free(col->index);
+        col->index = NULL;
+    }
+    
+    col->index = 0;
+}
+
