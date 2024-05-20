@@ -116,5 +116,3 @@ void remove_element(int** arr, int* size, int index) { //permet de supprimer un 
         printf("Échec de la réallocation de mémoire\n");
     }
 }
-
-}
