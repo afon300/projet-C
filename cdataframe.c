@@ -99,3 +99,22 @@ int count_equal_to(Column* col, void* value) { //permet de compter combien de va
     }
     return count;
 }
+
+void remove_element(int** arr, int* size, int index) { //permet de supprimer un index et de mettre a jour la colonne
+    if (index < 0 || index >= *size) {
+        printf("Index hors limites\n");
+        return;
+    }
+    for (int i = index; i < *size - 1; i++) {
+        (*arr)[i] = (*arr)[i + 1];
+    }
+    *size -= 1;
+    int* temp = realloc(*arr, *size * sizeof(int));
+    if (temp != NULL) {
+        *arr = temp;
+    } else {
+        printf("Échec de la réallocation de mémoire\n");
+    }
+}
+
+}
