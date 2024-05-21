@@ -6,116 +6,182 @@
 #include "column.h"
 #include "fonctions.h"
 
-/*mtn il vas falloir rendre ce bout un peut plus esthétique mais ce seras pour plus tard car là il est un peu tard*/
-
 int main() {
     int stop = 0;
+    CDataframe df;
+    init_cdataframe(&df, 0);
 
-/*********************** Exp d'ut avec des entiers *********************/
-
-    printf("Exemple d'utilisation avec des entiers:\n");
-    Column *int_col = create_column(INT, "colone de sortie d'entiers");
-
-    int Autriche = 30;       //|
-    int Bulgarie = 72;       //|
-    int Chine = 2;           //|
-    int Djibouti = 174;      //|
-    int Egypte = 35;         //|
-    int France = 7;          //|
-    int Grece = 52;          //|
-    int Hongrie = 56;        //|------> Classement par La Banque mondiale
-    int Inde = 5;            //|
-    int Japon = 4;           //|
-    int Kazakhstan = 55;     //|
-    int Laos = 120;          //|
-    int Madagascar = 133;    //|
-    int Norvege = 29;        //|
-    int Oman = 69;           //|
-
-    insert_value(int_col, &Autriche);
-    insert_value(int_col, &Bulgarie);
-    insert_value(int_col, &Chine);
-    insert_value(int_col, &Djibouti);
-    insert_value(int_col, &Egypte);
-    insert_value(int_col, &France);
-    insert_value(int_col, &Grece);
-    insert_value(int_col, &Hongrie);
-    insert_value(int_col, &Inde);
-    insert_value(int_col, &Japon);
-    insert_value(int_col, &Kazakhstan);
-    insert_value(int_col, &Laos);
-    insert_value(int_col, &Madagascar);
-    insert_value(int_col, &Norvege);
-    insert_value(int_col, &Oman);
-
-    printf("Column content before sorting : \n");
-    print_col(int_col);
-    sort(int_col, ASC);
-    printf("Column content after sorting : \n");
-    print_col_par_ordre(int_col);
-    
-    delete_column(int_col); // Libérer la mémoire pcq j'ai que 64MB de ram est c'est pas assez
+    int int_value;
+    char char_value;
+    float float_value;
+    double double_value;
+    char string_value[128];
 
 
-/********* Exp d'util avec des chaînes de caractères ou STRING pour en anglais ^^ *********/
+    char new_name[32];
+    char file_name[32];
+    int choice, choice_2;
+    Column *col;
+    int index;
 
-    Column *str_col = create_column(INT, "colone de sortie d'entiers");
-    printf("\nExemple d'utilisation avec des chaines de caracteres:\n");
-    str_col = create_column(STRING, "String column");
-    insert_value(str_col, "Vienne");
-    insert_value(str_col, "Sofia");   
-    insert_value(str_col, "Pekin");    
-    insert_value(str_col, "Djibouti");   
-    insert_value(str_col, "Le Caire");
-    insert_value(str_col, "Paris");
-    insert_value(str_col, "Athenes");
-    insert_value(str_col, "Budapest");
-    insert_value(str_col, "New Delhi");
-    insert_value(str_col, "Tokyo"); 
-    insert_value(str_col, "Noursoultan");  
-    insert_value(str_col, "Vientiane");
-    insert_value(str_col, "Antananarivo");
-    insert_value(str_col, "Oslo");
-    insert_value(str_col, "Mascate");
+    do {
+        printf("\nMenu:\n");
+        printf("1. Ajouter une colonne\n");
+        printf("2. Renommer une colonne\n");
+        printf("3. Exemple en dur\n");
+        printf("4. Imprimer le cdataframe\n");
+        printf("5. Sauvegarder une colonne dans un fichier CSV\n");
+        printf("6. Supprimer une colonne\n");
+        printf("7. Autres fonctions\n");
+        printf("8. Quitter\n");
+        printf("Choisissez une option: ");
+        scanf("%d", &choice);
 
-    print_col(str_col);
-    sort(str_col, ASC);
-    print_col_par_ordre(str_col);
+        switch (choice) {
+            case 1:
+                printf("\nQuel type voulez-vous choisir\n");
+                printf("1. INT\n");
+                printf("2. CHAR\n");
+                printf("3. FLOAT\n");
+                printf("4. DOUBLE\n");
+                printf("5. STRING\n");
+                scanf("%d", &choice_2);
 
-    save_into_csv(str_col, "output.csv");
+                switch (choice_2) {
+                    case 1:
+                        col = create_column(INT, "colonne de sortie d'entiers");
+                        printf("Entrez un entier: ");
+                        scanf("%d", &int_value);
+                        insert_value(col, &int_value);
+                        add_column(&df, *col);
+                        break;
+                    case 2:
+                        col = create_column(CHAR, "colonne de sortie de caractères");
+                        printf("Entrez un caractère: ");
+                        scanf(" %c", &char_value);
+                        insert_value(col, &char_value);
+                        add_column(&df, *col);
+                        break;
+                    case 3:
+                        col = create_column(FLOAT, "colonne de sortie de floats");
+                        printf("Entrez un float: ");
+                        scanf("%f", &float_value);
+                        insert_value(col, &float_value);
+                        add_column(&df, *col);
+                        break;
+                    case 4:
+                        col = create_column(DOUBLE, "colonne de sortie de doubles");
+                        printf("Entrez un double: ");
+                        scanf("%lf", &double_value);
+                        insert_value(col, &double_value);
+                        add_column(&df, *col);
+                        break;
+                    case 5:
+                        col = create_column(STRING, "colonne de sortie de strings");
+                        printf("Entrez une chaîne: ");
+                        scanf("%s", string_value);
+                        insert_value(col, string_value);
+                        add_column(&df, *col);
+                        break;
+                    default:
+                        printf("Choix invalide.\n");
+                        break;
+                }
+                break;
+            case 2:
+                    printf("Entrez l'index de la colonne à renommer: ");
+                    scanf("%d", &index);
+                    printf("Entrez le nouveau nom pour la colonne: ");
+                    scanf("%s", new_name);
+                    rename_column(&df, index, new_name);
+                    printf("Colonne renommée.\n");
+                    break;
+            case 3:
+                test_brut();
+                break;
+            case 4:
+                printf("Imprimer le cdataframe :\n");
+                print_dataframe(&df);
+                break;
+            case 5:
+                    printf("Entrez le nom du fichier CSV pour sauvegarder la colonne: ");
+                    scanf("%s", file_name);
+                    save_into_csv(&df.columns[0], file_name);
+                    printf("Colonne sauvegardée dans le fichier CSV.\n");
+                break;
+            case 6:
+                printf("Entrez l'index de la colonne à supprimer: ");
+                scanf("%d", &index);
+                remove_column(&df, index);
+                printf("Colonne supprimée.\n");
+                break;
+            case 7:
+                printf("Autres fonctions :\n");
+                printf("1. Compter les occurrences d'une valeur\n");
+                printf("2. Trouver une valeur\n");
+                printf("3. Compter les valeurs supérieures à une valeur\n");
+                printf("4. Compter les valeurs inférieures à une valeur\n");
+                printf("5. Compter les valeurs égales à une valeur\n");
+                printf("Choisissez une option: ");
+                scanf("%d", &choice_2);
 
-    delete_column(str_col); // Libérer la mémoire car sinon ça fais bcp là non ?
+                switch (choice_2) {
+                    case 1: {
+                        printf("Entrez la valeur à rechercher : ");
+                        int value;
+                        scanf("%d", &value);
+                        int occurrences = count_occurrences(&df.columns[0], &value);
+                        printf("Occurrences : %d\n", occurrences);
+                        break;
+                    }
+                    case 2: {
+                        printf("Entrez la position de la valeur à trouver : ");
+                        int position;
+                        scanf("%d", &position);
+                        void *found_value = find_value(&df.columns[0], position);
+                        printf("Valeur à la position %d : %d\n", position, *(int*)found_value);
+                        break;
+                    }
+                    case 3: {
+                        printf("Entrez la valeur de référence : ");
+                        int value;
+                        scanf("%d", &value);
+                        int count_greater = count_greater_than(&df.columns[0], &value);
+                        printf("Nombre de valeurs supérieures à %d : %d\n", value, count_greater);
+                        break;
+                    }
+                    case 4: {
+                        printf("Entrez la valeur de référence : ");
+                        int value;
+                        scanf("%d", &value);
+                        int count_less = count_less_than(&df.columns[0], &value);
+                        printf("Nombre de valeurs inférieures à %d : %d\n", value, count_less);
+                        break;
+                    }
+                    case 5: {
+                        printf("Entrez la valeur a rechercher : ");
+                        int value;
+                        scanf("%d", &value);
+                        int count_equal = count_equal_to(&df.columns[0], &value);
+                        printf("Nombre de valeurs égales à %d : %d\n", value, count_equal);
+                        break;
+                    }
+                    default:
+                        printf("Option invalide. Veuillez réessayer.\n");
+                        break;
+                }
+                break;
+            case 8:
+                printf("Quitter le programme.\n");
+                break;
+            default:
+                printf("Option invalide. Veuillez réessayer.\n");
+                break;
+        }
+    } while (choice != 7);
 
-/********************************* Pour les float ça rime avc boat c'est drôle ^^ *********************************/
+    free_cdataframe(&df);  
 
-    Column *boat_col = create_column(FLOAT, "Decimal column");
-    float hdi_moyen = 0.515; // argent total dans le monde 0.515 biliards de dollard soit 515 000 milliards
-    insert_value(boat_col, &hdi_moyen);
-    printf("Contenu de la colonne avant le tri :\n");
-    print_col(boat_col);
-    sort(boat_col, ASC);
-    delete_column(boat_col);  
-
-/************************************************* Pour les double **************************************************/
-
-    Column *double_col = create_column(DOUBLE, "Decimal_v2 column");
-    double pib_usa = 22.675; // en billions de dollards (un billion == 1 000 milliards)
-    insert_value(double_col, &pib_usa);
-    printf("Contenu de la colonne avant le tri :\n");
-    print_col(double_col);
-    sort(double_col, ASC);
-    delete_column(double_col);  
-
-/************************************************* Pour les double **************************************************/
-
-    Column *char_col = create_column(CHAR, "cara-column");
-    char yemen = 'Y'; // qui est le seul pays à avoir Y en initiale
-    insert_value(char_col, &yemen);
-    printf("Contenu de la colonne avant le tri :\n");
-    print_col(char_col);
-    sort(char_col, ASC);
-    delete_column(char_col);  
-
-    //scanf("%d", &stop); // pour le prog.exe
+    scanf("%d", &stop); // pour le prog.exe
     return 0;
 }

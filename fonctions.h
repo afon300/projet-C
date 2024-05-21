@@ -16,4 +16,6 @@ int compare_double(void* a, void* b);
 int compare_string(void* a, void* b);
 
 void save_into_csv(Column *cdf, char *file_name);
+void test_brut();
+
 #endif
