@@ -39,26 +39,12 @@ Column* create_column(DataType type, const char *title) {
             col->compare_func = compare_string;
             break;
         case STRUCTURE:
-            // Définissez ici la fonction d'impression et de comparaison pour les structures
             break;
         case UNIT:
         default:
-            // Gérez les cas UNIT et tout autre cas non spécifié ici
             break;
     }
     return col;
-}
-
-void sort(Column* col, int sort_dir) {
-    if (col == NULL || col->data == NULL) return;
-    
-    if (col->index == NULL) {
-        quicksort(col, 0, col->logical_size - 1, sort_dir);
-    } else if (*(col->index) == QUICKSORT_INDEX) { // Déférencement de l'index avant la comparaison
-        quicksort(col, 0, col->logical_size - 1, sort_dir);
-    } else if (*(col->index) == INSERTION_SORT_INDEX) { // Déférencement de l'index avant la comparaison
-        insertion_sort(col, sort_dir);
-    }
 }
 
 void quicksort(Column* col, int left, int right, int sort_dir) { // fonction se servant de partition pour trié rapidement une colonne de la dataframe
@@ -156,6 +142,18 @@ void print_col(Column* col) { //permet d'afficher une colonne
     printf("Voici la colonne avant rangement \n");
     for (int i = 0; i < col->logical_size; ++i) {
         col->print_func(((void**)col->data)[i]);
+    }
+}
+
+void sort(Column* col, int sort_dir) {
+    if (col == NULL || col->data == NULL) return;
+    
+    if (col->index == NULL) {
+        quicksort(col, 0, col->logical_size - 1, sort_dir);
+    } else if (*(col->index) == QUICKSORT_INDEX) { // Déférencement de l'index avant la comparaison
+        quicksort(col, 0, col->logical_size - 1, sort_dir);
+    } else if (*(col->index) == INSERTION_SORT_INDEX) { // Déférencement de l'index avant la comparaison
+        insertion_sort(col, sort_dir);
     }
 }
 
